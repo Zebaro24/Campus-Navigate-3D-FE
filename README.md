@@ -1,12 +1,32 @@
-# React + Vite
+# Campus-Navigate-3D
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Українська](https://img.shields.io/badge/Мова-Українська-brightgreen)](README.md)
+[![React](https://img.shields.io/badge/React-19.1-%2361DAFB?logo=react)](https://react.dev/)
+[![Three.js](https://img.shields.io/badge/Three.js-0.176-%23000000?logo=three.js)](https://threejs.org/)
 
-Currently, two official plugins are available:
+Веб-додаток для візуалізації та навігації 3D-моделлю університету з двома режимами: **автоматичний обліт** обраних точок і **вільний політ**. Інформація про локації підвантажується динамічно через API.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Основні функції
+- **Режими переміщення**:
+    - 🛩 Автоматичний обліт обраних локацій (кнопкова навігація).
+    - 🕹 Вільний рух камери (з обмеженнями меж моделі).
+- **Інформаційна панель**: Деталі про локацію зліва під час обльоту.
+- **Адмін-панель**: Додавання/редагування точок через Django.
+- **Оптимізація**: Плавна робота з великою 3D-моделлю.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠 Стек технологій
+- **Frontend**: React, Three.js, react-three-fiber
+- **Backend**: Django REST Framework
+- **Інструменти**: Tween.js (анімація), OrbitControls (керування камерою)
+
+---
+
+## 📌 Використання
+- **Обліт точок**: Натискайте кнопки на панелі зверху.
+- **Вільний політ**: Увімкніть режим "Вільний рух" та керуйте мишею/клавіатурою.
+
+## 📧 Контакти
+- **Автор**: Денис Щербатий
+- **Пошта**: zebaro.work@gmail.com
