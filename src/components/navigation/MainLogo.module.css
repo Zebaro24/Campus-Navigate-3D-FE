@@ -1,0 +1,23 @@
+.containerLogo {
+    height: 140px;
+    position: absolute;
+    display: flex;
+}
+
+.containerLogo img {
+    width: auto;
+    height: 100%;
+}
+
+.boxLogo {
+    width: 220px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    background: rgba(20, 20, 20, 0.80);
+}
+
+.gradientLeft {
+    width: 50px;
+    background: linear-gradient(to right, rgba(20, 20, 20, 0.80), rgba(0, 0, 0, 0));
+}
