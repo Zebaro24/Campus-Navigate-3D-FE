@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 models
+desktop.ini
+.env
