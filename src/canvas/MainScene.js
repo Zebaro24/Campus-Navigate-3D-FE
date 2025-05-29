@@ -8,7 +8,7 @@ import PathFollower from "./PathFollower.js";
 class MainScene {
     groundSize = 500;  // Размеры земли, которые будут повторяться
     numRepeats = 5;  // Количество повторений земли
-    pathModel = '/models/main-model.glb'
+    pathModel = '/api/active-model-file/'
 
     constructor() {
         this.scene = new THREE.Scene();
@@ -100,7 +100,7 @@ class MainScene {
     animate(animateFunc) {
         const loop = () => {
             requestAnimationFrame(loop);
-            animateFunc();
+            // animateFunc();
             this.renderer.render(this.scene, this.camera);
         };
         loop();
