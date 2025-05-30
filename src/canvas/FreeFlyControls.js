@@ -13,12 +13,14 @@ class FreeFlyControls {
             left: false,
             right: false,
             up: false,
-            down: false
+            down: false,
+            boost: false  // Состояние ускорения
         };
 
-        // Векторы для расчета движения
+        // Параметры управления
         this.velocity = new THREE.Vector3();
-        this.speed = 20;
+        this.normalSpeed = 10;
+        this.boostSpeed = 25; // Ускорение при нажатии Shift
         this.clock = new THREE.Clock();
 
         this.initEventListeners();
@@ -46,13 +48,22 @@ class FreeFlyControls {
     }
 
     handleKeyDown(event) {
+        if (event.altKey) event.preventDefault();
+
         switch (event.code) {
             case 'KeyW': this.movementState.forward = true; break;
             case 'KeyS': this.movementState.backward = true; break;
             case 'KeyA': this.movementState.left = true; break;
             case 'KeyD': this.movementState.right = true; break;
             case 'Space': this.movementState.up = true; break;
-            case 'ShiftLeft': this.movementState.down = true; break;
+            case 'AltLeft':
+            case 'AltRight':
+                this.movementState.down = true;
+                break;
+            case 'ShiftLeft':
+            case 'ShiftRight':
+                this.movementState.boost = true;
+                break;
         }
     }
 
@@ -63,7 +74,14 @@ class FreeFlyControls {
             case 'KeyA': this.movementState.left = false; break;
             case 'KeyD': this.movementState.right = false; break;
             case 'Space': this.movementState.up = false; break;
-            case 'ShiftLeft': this.movementState.down = false; break;
+            case 'AltLeft':
+            case 'AltRight':
+                this.movementState.down = false;
+                break;
+            case 'ShiftLeft':
+            case 'ShiftRight':
+                this.movementState.boost = false;
+                break;
         }
     }
 
@@ -81,9 +99,12 @@ class FreeFlyControls {
     }
 
     applyMovement(delta) {
+        // Определяем текущую скорость (обычная или ускоренная)
+        const currentSpeed = this.movementState.boost ? this.boostSpeed : this.normalSpeed;
+
         // Нормализация и масштабирование скорости
         if (this.velocity.lengthSq() > 0) {
-            this.velocity.normalize().multiplyScalar(this.speed * delta);
+            this.velocity.normalize().multiplyScalar(currentSpeed * delta);
         }
 
         // Применение перемещения
