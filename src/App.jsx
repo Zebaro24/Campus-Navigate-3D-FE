@@ -22,7 +22,7 @@ function App() {
             <NavMenu mainScene={mainScene}/>
             {/*<Overlay/>*/}
             <CameraInfo mainScene={mainScene}/>
-            <div ref={containerRef}/>
+            <div id="main-scene" ref={containerRef}/>
             <PointerLockHint />
         </>
     )
