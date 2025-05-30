@@ -1,0 +1,95 @@
+.containerMenu {
+    position: absolute;
+    display: flex;
+    height: 50px;
+    z-index: 1000;
+    right: 0;
+}
+
+.gradientRight {
+    width: 50px;
+    background: linear-gradient(to left, rgba(20, 20, 20, 0.80), rgba(0, 0, 0, 0));
+}
+
+.boxMenu {
+    background: rgba(20, 20, 20, 0.80);
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+    margin: 0;
+    /*position: relative;*/
+}
+
+.menu button {
+    display: flex;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 20px;
+    height: 50px;
+    /*transition: all 0.3s ease;*/
+    background: transparent;
+    cursor: pointer;
+    /*position: relative;*/
+}
+
+.menu button:hover {
+    height: 70px;
+    background: linear-gradient(to bottom, rgba(20, 20, 20, 0.9), rgba(0, 0, 0, 0));
+}
+
+.menu button.active {
+    height: 70px;
+    background: linear-gradient(to bottom, rgba(76, 175, 80, 0.8), rgba(0, 0, 0, 0));
+    cursor: auto;
+}
+
+.menu button.dropdownContent {
+    height: auto;
+}
+
+/* Стили для выпадающего меню */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownContent {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background: rgba(20, 20, 20, 0.95);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    border-radius: 0 0 8px 8px;
+    z-index: 1001;
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdownContent button {
+    width: 100%;
+    text-align: left;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    height: auto;
+    background: transparent !important;
+}
+
+.dropdownContent button:hover {
+    background: rgba(50, 50, 50, 0.7) !important;
+    height: auto;
+}
+
+.dropdownContent button.activeItem {
+    background: rgba(76, 175, 80, 0.4) !important;
+    color: #aaffaa;
+}

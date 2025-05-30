@@ -1,5 +1,5 @@
 import MainLogo from "./components/navigation/MainLogo.jsx";
-import NavMenu from "./components/navigation/NavMenu.jsx";
+import NavMenu from "./components/navigation/menu/NavMenu.jsx";
 import Overlay from "./components/Overlay.jsx";
 
 import './App.css'
@@ -19,7 +19,7 @@ function App() {
     return (
         <>
             <MainLogo/>
-            <NavMenu/>
+            <NavMenu mainScene={mainScene}/>
             {/*<Overlay/>*/}
             <CameraInfo mainScene={mainScene}/>
             <div ref={containerRef}/>
