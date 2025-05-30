@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/examples/jsm/loaders/DRACOLoader.js';
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import FreeFlyControls from './FreeFlyControls.js';
 
 import PathFollower from "./PathFollower.js";
 
@@ -44,7 +44,7 @@ class MainScene {
         pathFollower.setTilt(Math.PI / 4);
 
 
-        this.animate(() => pathFollower.animate())
+        this.animate(/*() => pathFollower.animate()*/)
     }
 
     getCanvas() {
@@ -100,7 +100,15 @@ class MainScene {
     animate(animateFunc) {
         const loop = () => {
             requestAnimationFrame(loop);
-            // animateFunc();
+
+            if (this.freeFlyControls) {
+                this.freeFlyControls.update();
+            }
+
+            if (animateFunc) {
+                animateFunc();
+            }
+
             this.renderer.render(this.scene, this.camera);
         };
         loop();
@@ -113,11 +121,10 @@ class MainScene {
 
     createCamera() {
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 150);
-
-        // Управление камерой
-        const controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.camera.position.set(0, 30, 30);
-        controls.update();
+
+        this.freeFlyControls = new FreeFlyControls(this.camera, document.body);
+        this.scene.add(this.freeFlyControls.getObject());
 
         // Обновление размера экрана
         window.addEventListener('resize', () => {
