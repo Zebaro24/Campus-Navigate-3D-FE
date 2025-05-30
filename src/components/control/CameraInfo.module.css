@@ -1,0 +1,131 @@
+.container {
+    position: fixed;
+    top: 22%;
+    left: 20px;
+    background: rgba(20, 20, 20, 0.80);
+    color: #e0f7ff;
+    padding: 14px 16px;
+    border-radius: 8px;
+    z-index: 1000;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(100, 100, 100, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    max-width: 240px;
+    transition: all 0.3s ease;
+}
+
+.container:hover {
+    border-color: rgba(64, 164, 255, 0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #70c0ff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.title::before {
+    content: "🎥";
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.fpsBadge {
+    background: rgba(30, 30, 40, 0.7);
+    color: #70c0ff;
+    padding: 3px 9px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 13px;
+    border: 1px solid rgba(64, 164, 255, 0.25);
+}
+
+/* Разделенные секции */
+.infoSection {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.infoSection:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.sectionTitle {
+    font-size: 13px;
+    font-weight: 600;
+    color: #70c0ff;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+}
+
+.sectionTitle::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #70c0ff;
+    margin-right: 8px;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 5px 10px;
+}
+
+.label {
+    color: #b0c8d8;
+    font-size: 13px;
+    text-align: right;
+}
+
+.value {
+    font-weight: 600;
+    color: #ffec99;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+
+.axisX { color: #ff7d7d; }
+.axisY { color: #7dff9d; }
+.axisZ { color: #7d9dff; }
+
+.hint {
+    font-size: 11px;
+    text-align: center;
+    color: #9098a0;
+    margin-top: 8px;
+    padding-top: 8px;
+    /*border-top: 1px solid rgba(255, 255, 255, 0.1);*/
+}
+
+.hintKey {
+    display: inline-block;
+    background: rgba(50, 50, 60, 0.7);
+    color: #70c0ff;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin: 0 2px;
+    border: 1px solid rgba(100, 150, 200, 0.3);
+    font-weight: 600;
+}
