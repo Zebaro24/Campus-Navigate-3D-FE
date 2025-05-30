@@ -27,7 +27,7 @@ class FreeFlyControls {
     }
 
     getObject() {
-        return this.controls.getObject();
+        return this.controls.object
     }
 
     lock() {
