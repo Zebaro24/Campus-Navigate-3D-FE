@@ -8,7 +8,7 @@ import PathFollower from "./PathFollower.js";
 class MainScene {
     groundSize = 500;  // Размеры земли, которые будут повторяться
     numRepeats = 5;  // Количество повторений земли
-    pathModel = '/api/active-model-file/'
+    pathModel = import.meta.env.VITE_MODEL_URL
 
     constructor() {
         this.scene = new THREE.Scene();
@@ -70,11 +70,40 @@ class MainScene {
     }
 
     createLight() {
-        const light = new THREE.AmbientLight(0xffffff, 1);
-        this.scene.add(light);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
-        directionalLight.position.set(5, 5, 5);
-        this.scene.add(directionalLight);
+        // Основное окружение
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
+        this.scene.add(ambientLight);
+
+        // Основной направленный свет (солнце)
+        const sunLight = new THREE.DirectionalLight(0xfff4e6, 1.2);
+        sunLight.position.set(10, 15, 10);
+        sunLight.castShadow = true;
+
+        // Настройки теней для реалистичности
+        sunLight.shadow.mapSize.width = 2048;
+        sunLight.shadow.mapSize.height = 2048;
+        sunLight.shadow.camera.near = 0.5;
+        sunLight.shadow.camera.far = 50;
+        sunLight.shadow.camera.left = -20;
+        sunLight.shadow.camera.right = 20;
+        sunLight.shadow.camera.top = 20;
+        sunLight.shadow.camera.bottom = -20;
+        sunLight.shadow.bias = -0.001;
+        this.scene.add(sunLight);
+
+        // Заполняющий свет для смягчения теней
+        const fillLight = new THREE.DirectionalLight(0xccf0ff, 0.3);
+        fillLight.position.set(-5, 10, -5);
+        this.scene.add(fillLight);
+
+        // Свет с задней стороны для контуров зданий
+        const backLight = new THREE.DirectionalLight(0xffffff, 0.4);
+        backLight.position.set(-10, 5, -10);
+        this.scene.add(backLight);
+
+        // Теплый свет от земли (отраженный свет)
+        const groundLight = new THREE.HemisphereLight(0xfff1cf, 0x2a2a40, 0.3);
+        this.scene.add(groundLight);
     }
 
     loadModel(pathModel) {
@@ -85,13 +114,21 @@ class MainScene {
         loader.setDRACOLoader(dracoLoader);
 
         // Загрузка модели
+        let lastTens = -10;  // чтобы сработало в первый раз
+
         loader.load(pathModel, (gltf) => {
             console.log('Модель успешно загружена!');
             const model = gltf.scene;
             this.scene.add(model);
             model.position.set(0, 0, 0);
         }, (xhr) => {
-            console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+            const percent = Math.floor((xhr.loaded / xhr.total) * 100);
+            const tens = Math.floor(percent / 10) * 10;
+
+            if (tens !== lastTens) {
+                console.log(tens + '% loaded');
+                lastTens = tens;
+            }
         }, (error) => {
             console.error('Ошибка загрузки модели:', error);
         });
@@ -132,6 +169,10 @@ class MainScene {
             this.camera.updateProjectionMatrix();
             this.renderer.setSize(window.innerWidth, window.innerHeight);
         });
+    }
+
+    setAnimation (flightLocation) {
+        console.log("ms", flightLocation)
     }
 }
 
