@@ -5,6 +5,8 @@ import Overlay from "./components/Overlay.jsx";
 import './App.css'
 import {useEffect, useRef, useState} from "react";
 import MainScene from "./canvas/MainScene.js";
+import CameraInfo from "./components/control/CameraInfo.jsx";
+import PointerLockHint from "./components/control/PointerLockHint.jsx";
 
 function App() {
     const containerRef = useRef(null);
@@ -18,8 +20,10 @@ function App() {
         <>
             <MainLogo/>
             <NavMenu/>
-            <Overlay/>
+            {/*<Overlay/>*/}
+            <CameraInfo mainScene={mainScene}/>
             <div ref={containerRef}/>
+            <PointerLockHint />
         </>
     )
 }
