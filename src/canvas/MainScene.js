@@ -22,6 +22,8 @@ class MainScene {
         this.createLight()
         this.loadModel(this.pathModel)
 
+        this.componentLoadFunc = null
+
 
         // Example usage (in your main_canvas.js):
         // Define some path points
@@ -113,25 +115,23 @@ class MainScene {
         dracoLoader.setDecoderPath('https://www.gstatic.com/draco/v1/decoders/'); // Путь к декодеру Draco
         loader.setDRACOLoader(dracoLoader);
 
-        // Загрузка модели
-        let lastTens = -10;  // чтобы сработало в первый раз
-
         loader.load(pathModel, (gltf) => {
             console.log('Модель успешно загружена!');
             const model = gltf.scene;
-            this.scene.add(model);
             model.position.set(0, 0, 0);
+            this.scene.add(model);
+            this.componentLoadFunc && this.componentLoadFunc(101)
         }, (xhr) => {
             const percent = Math.floor((xhr.loaded / xhr.total) * 100);
-            const tens = Math.floor(percent / 10) * 10;
 
-            if (tens !== lastTens) {
-                console.log(tens + '% loaded');
-                lastTens = tens;
-            }
+            this.componentLoadFunc && this.componentLoadFunc(percent)
         }, (error) => {
             console.error('Ошибка загрузки модели:', error);
         });
+    }
+
+    setComponentLoadFunc(func) {
+        this.componentLoadFunc = func
     }
 
     animate(animateFunc) {

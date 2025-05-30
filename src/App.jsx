@@ -7,9 +7,11 @@ import {useEffect, useRef, useState} from "react";
 import MainScene from "./canvas/MainScene.js";
 import CameraInfo from "./components/control/CameraInfo.jsx";
 import PointerLockHint from "./components/control/PointerLockHint.jsx";
+import LoadingScreen from "./components/LoadingScreen.jsx";
 
 function App() {
     const containerRef = useRef(null);
+    const [isModelLoaded, setIsModelLoaded] = useState(false);
     const [mainScene] = useState(() => new MainScene());
 
     useEffect(() => {
@@ -18,12 +20,20 @@ function App() {
 
     return (
         <>
+            {!isModelLoaded && (
+                <LoadingScreen mainScene={mainScene} setIsModelLoaded={setIsModelLoaded} />
+            )}
+
             <MainLogo/>
-            <NavMenu mainScene={mainScene}/>
-            {/*<Overlay/>*/}
-            <CameraInfo mainScene={mainScene}/>
+
+            {isModelLoaded && (
+                <>
+                    <NavMenu mainScene={mainScene}/>
+                    <CameraInfo mainScene={mainScene}/>
+                    <PointerLockHint />
+                </>
+            )}
             <div id="main-scene" ref={containerRef}/>
-            <PointerLockHint />
         </>
     )
 }
