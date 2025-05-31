@@ -4,7 +4,7 @@ import NavItem from './NavItem';
 import DropdownNavItem from './DropdownNavItem';
 import axios from "axios";
 
-function NavMenu({mainScene}) {
+function NavMenu({mainScene, setOverlayInformation}) {
     const [activeMenu, setActiveMenu] = useState('Головна');
 
     const itemsFunc = {activeMenu, onSelect:setActiveMenu};
@@ -13,15 +13,21 @@ function NavMenu({mainScene}) {
     const [importantLocationItems, setImportantLocationItems] = useState(() => {})
     const [cabinetLocationItems, setCabinetLocationItems] = useState(() => {})
 
-    const startAnimationLocation = (id) => {
-        axios.get(`/api/locations/${id}`).then(res => {
-            mainScene.setAnimation(res.data)
-        })
-    }
-
     useEffect(() => {
+        const startAnimationLocation = (id) => {
+            axios.get(`/api/locations/${id}`).then(res => {
+                setOverlayInformation({
+                    title: res.data.title,
+                    image: res.data.image,
+                    description: res.data.description,
+                })
+                mainScene.setAnimation(res.data)
+            })
+        }
+
         axios.get('/api/locations/category/main/').then((res => {
             setMainLocationFunc(() => () => startAnimationLocation(res.data[0].id))
+            startAnimationLocation(res.data[0].id)
         }))
 
         axios.get('/api/locations/category/important/').then((res => {
@@ -37,7 +43,7 @@ function NavMenu({mainScene}) {
             })
             setCabinetLocationItems(() => res.data)
         }))
-    }, []);
+    }, [setMainLocationFunc, setImportantLocationItems, setCabinetLocationItems, setOverlayInformation, mainScene]);
 
 
     return (

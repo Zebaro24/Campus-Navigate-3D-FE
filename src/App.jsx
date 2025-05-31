@@ -11,8 +11,10 @@ import LoadingScreen from "./components/LoadingScreen.jsx";
 
 function App() {
     const containerRef = useRef(null);
-    const [isModelLoaded, setIsModelLoaded] = useState(false);
     const [mainScene] = useState(() => new MainScene());
+
+    const [isModelLoaded, setIsModelLoaded] = useState(false);
+    const [overlayInformation, setOverlayInformation] = useState(null);
 
     useEffect(() => {
         containerRef.current.appendChild(mainScene.getCanvas());
@@ -28,7 +30,8 @@ function App() {
 
             {isModelLoaded && (
                 <>
-                    <NavMenu mainScene={mainScene}/>
+                    <NavMenu mainScene={mainScene} setOverlayInformation={setOverlayInformation}/>
+                    <Overlay information={overlayInformation} setInformation={setOverlayInformation} />
                     <CameraInfo mainScene={mainScene}/>
                     <PointerLockHint />
                 </>
