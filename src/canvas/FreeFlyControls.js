@@ -40,9 +40,9 @@ class FreeFlyControls {
 
     initEventListeners() {
         // Блокировка при клике
-        window.addEventListener('load', () => {
+        setTimeout(() => {
             document.getElementById('main-scene').addEventListener('click', this.lock.bind(this));
-        })
+        }, 0)
 
         // Обработчики клавиш
         document.addEventListener('keydown', this.handleKeyDown.bind(this));
