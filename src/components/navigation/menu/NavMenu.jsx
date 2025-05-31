@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styles from './NavMenu.module.css';
 import NavItem from './NavItem';
 import DropdownNavItem from './DropdownNavItem';
@@ -13,18 +13,29 @@ function NavMenu({mainScene, setOverlayInformation}) {
     const [importantLocationItems, setImportantLocationItems] = useState(() => {})
     const [cabinetLocationItems, setCabinetLocationItems] = useState(() => {})
 
-    useEffect(() => {
-        const startAnimationLocation = (id) => {
-            axios.get(`/api/locations/${id}`).then(res => {
+    const currentHandlerLockRef = useRef(() => {});
+
+    const startAnimationLocation = useCallback((id) => {
+        document.removeEventListener('pointerlockchange', currentHandlerLockRef.current);
+
+        axios.get(`/api/locations/${id}`).then(res => {
+            const newHandler = () => {
+                if (document.pointerLockElement !== null) return;
                 setOverlayInformation({
                     title: res.data.title,
                     image: res.data.image,
                     description: res.data.description,
-                })
-                mainScene.setAnimation(res.data)
-            })
-        }
+                });
+                mainScene.setAnimation(res.data);
+            };
 
+            newHandler();
+            document.addEventListener('pointerlockchange', newHandler);
+            currentHandlerLockRef.current = newHandler;
+        });
+    }, [mainScene, setOverlayInformation]);
+
+    useEffect(() => {
         axios.get('/api/locations/category/main/').then((res => {
             setMainLocationFunc(() => () => startAnimationLocation(res.data[0].id))
             startAnimationLocation(res.data[0].id)
@@ -43,7 +54,7 @@ function NavMenu({mainScene, setOverlayInformation}) {
             })
             setCabinetLocationItems(() => res.data)
         }))
-    }, [setMainLocationFunc, setImportantLocationItems, setCabinetLocationItems, setOverlayInformation, mainScene]);
+    }, [setMainLocationFunc, setImportantLocationItems, setCabinetLocationItems, startAnimationLocation]);
 
 
     return (
