@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+
 import styles from './PointerLockHint.module.css';
 
 function PointerLockHint() {
@@ -44,7 +45,7 @@ function PointerLockHint() {
                             <kbd className={styles.key}>S</kbd>
                             <kbd className={styles.key}>D</kbd>
                         </div>
-                        <span className={styles.keyLabel}>Движение</span>
+                        <span className={styles.keyLabel}>Рух</span>
                     </div>
 
                     <div className={styles.controlGroup}>
@@ -52,27 +53,27 @@ function PointerLockHint() {
                             <kbd className={styles.key}>Space</kbd>
                             <kbd className={styles.key}>Alt</kbd>
                         </div>
-                        <span className={styles.keyLabel}>Вверх/Вниз</span>
+                        <span className={styles.keyLabel}>Вгору/Вниз</span>
                     </div>
 
                     <div className={styles.controlGroup}>
                         <div className={styles.keysRow}>
                             <kbd className={styles.key}>Shift</kbd>
                         </div>
-                        <span className={styles.keyLabel}>Ускорение</span>
+                        <span className={styles.keyLabel}>Прискорення</span>
                     </div>
 
                     <div className={styles.controlGroup}>
                         <div className={styles.keysRow}>
                             <kbd className={styles.key}>I</kbd>
                         </div>
-                        <span className={styles.keyLabel}>Инфо</span>
+                        <span className={styles.keyLabel}>Інфо</span>
                     </div>
                 </div>
 
                 <div className={styles.footer}>
                     <kbd className={styles.escapeKey}>ESC</kbd>
-                    <span className={styles.footerText}>Выход</span>
+                    <span className={styles.footerText}>Вихід</span>
                 </div>
 
             </div>

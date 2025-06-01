@@ -1,5 +1,6 @@
-import styles from "./Overley.module.css"
 import {useEffect} from "react";
+
+import styles from "./Overley.module.css"
 
 function Overlay({information, setInformation}) {
     useEffect(() => {

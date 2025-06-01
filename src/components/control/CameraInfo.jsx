@@ -1,16 +1,16 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import {useState, useEffect, useRef, useCallback} from 'react';
 import * as THREE from 'three';
+
 import styles from './CameraInfo.module.css';
 
-function CameraInfo({ mainScene }) {
+function CameraInfo({mainScene}) {
     const [cameraData, setCameraData] = useState({
+        position: {x: 0, y: 0, z: 0},
         pitch: 0,
         yaw: 0,
-        position: { x: 0, y: 0, z: 0 },
         fps: 0
     });
 
-    // По умолчанию компонент скрыт
     const [isActive, setIsActive] = useState(false);
     const frameCount = useRef(0);
     const lastUpdateTime = useRef(0);
@@ -31,7 +31,7 @@ function CameraInfo({ mainScene }) {
         const delta = now - lastUpdateTime.current;
 
         if (delta >= 100) {
-            const { camera } = mainScene;
+            const {camera} = mainScene;
 
             const euler = new THREE.Euler().setFromQuaternion(
                 camera.quaternion,
@@ -56,7 +56,7 @@ function CameraInfo({ mainScene }) {
         requestRef.current = requestAnimationFrame(update);
     }, [mainScene, toDegrees]);
 
-    // Обработчик клавиши I - переключение видимости
+    // Обробник клавіші I - перемикання видимості
     const handleKeyPress = useCallback((e) => {
         if (e.code === 'KeyI') {
             setIsActive(prev => !prev);
@@ -64,7 +64,7 @@ function CameraInfo({ mainScene }) {
     }, []);
 
     useEffect(() => {
-        // Всегда слушаем нажатия клавиши I, даже когда компонент скрыт
+        // Завжди слухаємо натискання клавіші I, навіть коли компонент прихований
         document.addEventListener('keydown', handleKeyPress);
 
         return () => {
@@ -92,9 +92,9 @@ function CameraInfo({ mainScene }) {
                 <div className={styles.fpsBadge}>{cameraData.fps} FPS</div>
             </div>
 
-            {/* Секция позиции */}
+            {/* Секція позиції */}
             <div className={styles.infoSection}>
-                <h4 className={styles.sectionTitle}>Позиция</h4>
+                <h4 className={styles.sectionTitle}>Позиція</h4>
                 <div className={styles.infoGrid}>
                     <span className={styles.label}>X:</span>
                     <span className={`${styles.value} ${styles.axisX}`}>{cameraData.position.x}</span>
@@ -107,11 +107,11 @@ function CameraInfo({ mainScene }) {
                 </div>
             </div>
 
-            {/* Секция ориентации */}
+            {/* Секція орієнтації */}
             <div className={styles.infoSection}>
-                <h4 className={styles.sectionTitle}>Ориентация</h4>
+                <h4 className={styles.sectionTitle}>Орієнтація</h4>
                 <div className={styles.infoGrid}>
-                    <span className={styles.label}>Наклон:</span>
+                    <span className={styles.label}>Нахил:</span>
                     <span className={styles.value}>{cameraData.pitch}°</span>
 
                     <span className={styles.label}>Поворот:</span>
@@ -120,7 +120,7 @@ function CameraInfo({ mainScene }) {
             </div>
 
             <p className={styles.hint}>
-                Нажмите <span className={styles.hintKey}>I</span> чтобы скрыть/показать
+                Натисніть <span className={styles.hintKey}>I</span> щоб приховати/показати
             </p>
         </div>
     );

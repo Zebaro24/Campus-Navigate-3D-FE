@@ -1,13 +1,16 @@
+import {useEffect, useRef, useState} from "react";
+
 import MainLogo from "./components/navigation/MainLogo.jsx";
 import NavMenu from "./components/navigation/menu/NavMenu.jsx";
 import Overlay from "./components/Overlay.jsx";
 
-import './App.css'
-import {useEffect, useRef, useState} from "react";
-import MainScene from "./canvas/MainScene.js";
-import CameraInfo from "./components/control/CameraInfo.jsx";
 import PointerLockHint from "./components/control/PointerLockHint.jsx";
+import CameraInfo from "./components/control/CameraInfo.jsx";
 import LoadingScreen from "./components/LoadingScreen.jsx";
+
+import MainScene from "./canvas/MainScene.js";
+
+import './App.css'
 
 function App() {
     const containerRef = useRef(null);
@@ -23,7 +26,7 @@ function App() {
     return (
         <>
             {!isModelLoaded && (
-                <LoadingScreen mainScene={mainScene} setIsModelLoaded={setIsModelLoaded} />
+                <LoadingScreen mainScene={mainScene} setIsModelLoaded={setIsModelLoaded}/>
             )}
 
             <MainLogo/>
@@ -31,9 +34,9 @@ function App() {
             {isModelLoaded && (
                 <>
                     <NavMenu mainScene={mainScene} setOverlayInformation={setOverlayInformation}/>
-                    <Overlay information={overlayInformation} setInformation={setOverlayInformation} />
+                    <Overlay information={overlayInformation} setInformation={setOverlayInformation}/>
                     <CameraInfo mainScene={mainScene}/>
-                    <PointerLockHint />
+                    <PointerLockHint/>
                 </>
             )}
             <div id="main-scene" ref={containerRef}/>

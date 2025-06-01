@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+
 import styles from './NavMenu.module.css';
 
-function DropdownNavItem({ children, items, itemsFunc }) {
+function DropdownNavItem({children, items, itemsFunc}) {
     const {activeMenu, onSelect} = itemsFunc
     const [showDropdown, setShowDropdown] = useState(false);
     const isActive = activeMenu.startsWith(children);

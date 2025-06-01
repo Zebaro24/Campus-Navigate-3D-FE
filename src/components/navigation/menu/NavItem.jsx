@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styles from './NavMenu.module.css';
 
 function NavItem({ children, itemsFunc, clickFunc }) {

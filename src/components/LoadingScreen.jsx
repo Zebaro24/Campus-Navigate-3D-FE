@@ -1,14 +1,15 @@
 import {useEffect, useRef, useState} from 'react';
+
 import styles from './LoadingScreen.module.css';
 
-function LoadingScreen({ setIsModelLoaded, mainScene }) {
+function LoadingScreen({setIsModelLoaded, mainScene}) {
     const [progress, setProgress] = useState(0);
     const canvasRef = useRef(null);
 
     useEffect(() => {
         mainScene.setComponentLoadFunc(setProgress);
     }, [mainScene]);
-    
+
     useEffect(() => {
         if (progress === 101) setTimeout(() => setIsModelLoaded(true), 400)
         if (!canvasRef.current) return;
@@ -31,12 +32,12 @@ function LoadingScreen({ setIsModelLoaded, mainScene }) {
             const barX = (width - barWidth) / 2;
             const barY = height * 0.6;
 
-            // Внешний контур
+            // Зовнішній контур
             ctx.strokeStyle = '#4CAF50';
             ctx.lineWidth = 2;
             ctx.strokeRect(barX, barY, barWidth, barHeight);
 
-            // Заполнение
+            // Наповнення
             const fillWidth = (barWidth * progress) / 100;
             ctx.fillStyle = '#4CAF50';
             ctx.fillRect(barX, barY, fillWidth, barHeight);
@@ -47,11 +48,11 @@ function LoadingScreen({ setIsModelLoaded, mainScene }) {
             ctx.textAlign = 'center';
             ctx.fillText('Завантаження моделі', width / 2, height * 0.4);
 
-            // Проценты
+            // Відсотки
             ctx.font = 'bold 28px Arial';
             ctx.fillText(`${Math.round(progress)}%`, width / 2, barY + barHeight + 40);
 
-            // Анимация загрузки
+            // Завантажити анімацію
             requestAnimationFrame(animate);
         };
 

@@ -1,8 +1,10 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import styles from './NavMenu.module.css';
-import NavItem from './NavItem';
-import DropdownNavItem from './DropdownNavItem';
 import axios from "axios";
+
+import DropdownNavItem from './DropdownNavItem';
+import NavItem from './NavItem';
+
+import styles from './NavMenu.module.css';
 
 function NavMenu({mainScene, setOverlayInformation}) {
     const [activeMenu, setActiveMenu] = useState('Головна');
