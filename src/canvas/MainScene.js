@@ -2,8 +2,7 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/examples/jsm/loaders/DRACOLoader.js';
 import FreeFlyControls from './FreeFlyControls.js';
-
-import PathFollower from "./PathFollower.js";
+import AnimationHandler from "./AnimationHandler.js";
 
 class MainScene {
     groundSize = 500;  // Размеры земли, которые будут повторяться
@@ -15,38 +14,21 @@ class MainScene {
 
         this.camera = null
         this.renderer = null
+        this.componentLoadFunc = null
+        this.animationHandler = null
+        this.animationFunc = null
 
         this.createRender()
         this.createCamera()
+        this.createAnimation()
         this.createGround(this.groundSize, this.numRepeats)
         this.createLight()
         this.loadModel(this.pathModel)
+    }
 
-        this.componentLoadFunc = null
-
-
-        // Example usage (in your main_canvas.js):
-        // Define some path points
-        const pathPoints = [
-            new THREE.Vector3(-20, 0, 25),
-            new THREE.Vector3(35, 0, 35),
-            new THREE.Vector3(80, 0, -5),
-            new THREE.Vector3(40, 0, -45),
-            new THREE.Vector3(0, 0, -90),
-            new THREE.Vector3(-35, 0, -65),
-            new THREE.Vector3(-95, 0, -65),
-            new THREE.Vector3(-100, 0, -10),
-            new THREE.Vector3(-70, 0, 30),
-            new THREE.Vector3(-20, 0, 25),
-        ];
-
-        // Create the PathFollower
-        const pathFollower = new PathFollower(this.scene, this.camera, pathPoints, 0.0005, 15);
-        pathFollower.updateOrbitVisibility(false);
-        pathFollower.setTilt(Math.PI / 4);
-
-
-        this.animate(/*() => pathFollower.animate()*/)
+    createAnimation() {
+        this.animationHandler = new AnimationHandler(this.scene, this.camera)
+        this.animationFunc = this.animationHandler.getAnimationFunc()
     }
 
     getCanvas() {
@@ -120,6 +102,7 @@ class MainScene {
             const model = gltf.scene;
             model.position.set(0, 0, 0);
             this.scene.add(model);
+            this.animate()
             this.componentLoadFunc && this.componentLoadFunc(101)
         }, (xhr) => {
             const percent = Math.floor((xhr.loaded / xhr.total) * 100);
@@ -134,7 +117,7 @@ class MainScene {
         this.componentLoadFunc = func
     }
 
-    animate(animateFunc) {
+    animate() {
         const loop = () => {
             requestAnimationFrame(loop);
 
@@ -142,8 +125,8 @@ class MainScene {
                 this.freeFlyControls.update();
             }
 
-            if (animateFunc) {
-                animateFunc();
+            if (!this.freeFlyControls.isLocked() && this.animationFunc) {
+                this.animationFunc()
             }
 
             this.renderer.render(this.scene, this.camera);
@@ -171,8 +154,8 @@ class MainScene {
         });
     }
 
-    setAnimation (flightLocation) {
-        console.log("ms", flightLocation)
+    setAnimation(flightLocation) {
+        this.animationHandler && this.animationHandler.setAnimation(flightLocation)
     }
 }
 
