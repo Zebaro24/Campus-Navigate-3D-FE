@@ -22,7 +22,7 @@ function Overlay({information, setInformation}) {
         <div className={styles.overlay}>
             <button className={styles.toggleBtn} onClick={toggleBtn}>Сховати</button>
             <h1>{information.title}</h1>
-            {information.image && <img alt={information.image}/>}
+            {information.image && <img src={information.image} alt={information.title}/>}
             <p>{information.description}</p>
         </div>
     )
