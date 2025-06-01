@@ -1,13 +1,14 @@
 import {CatmullRomCurve3, BufferGeometry, LineBasicMaterial, Line, Vector3} from "three";
+
 import AnimationBase from "./AnimationBase.js";
 
-class PointsFlight extends AnimationBase{
+class PointsFlight extends AnimationBase {
     constructor(scene, camera) {
         super(scene, camera);
 
-        this.speed = null;
-        this.pitch = null;
         this.lookDirection = null;
+        this.pitch = null;
+        this.speed = null;
 
         this.t = 0;
     }
@@ -26,7 +27,7 @@ class PointsFlight extends AnimationBase{
         this.scene.add(orbit);
     }
 
-    getDirectionVector(point){
+    getDirectionVector(point) {
         if (!point) {
             point = this.curve.getPoint(this.t);
         }
@@ -70,10 +71,6 @@ class PointsFlight extends AnimationBase{
 
     getFirstPoint() {
         return this.curve.getPoint(0);
-    }
-
-    getFirstDirectionVector() {
-        return this.getDirectionVector();
     }
 }
 

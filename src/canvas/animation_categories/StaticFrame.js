@@ -1,14 +1,16 @@
 import {Vector3, LineCurve3} from "three";
+
 import AnimationBase from "./AnimationBase.js";
 
-class StaticFrame extends AnimationBase{
+class StaticFrame extends AnimationBase {
     constructor(scene, camera) {
         super(scene, camera);
 
-        this.point = null;
-        this.backPoint = null;
         this.lookDirectionVector = null;
+        this.backPoint = null;
+        this.point = null;
         this.curve = null;
+
         this.t = 0
     }
 
@@ -18,7 +20,6 @@ class StaticFrame extends AnimationBase{
         const z = Math.cos(pitch) * Math.cos(yaw);
         return new Vector3(x, y, z).normalize();
     }
-
 
     createPath() {
         this.backPoint = this.point.clone().add(this.lookDirectionVector.multiplyScalar(1));
@@ -33,7 +34,7 @@ class StaticFrame extends AnimationBase{
     getDirectionVector() {
         let tangent = this.curve.getTangent(this.t).normalize();
         const point = this.curve.getPoint(this.t);
-        return  point.add(tangent);
+        return point.add(tangent);
     }
 
     animate() {
@@ -55,10 +56,6 @@ class StaticFrame extends AnimationBase{
         this.lookDirectionVector = this.getLookDirectionVector(flightLocation.yaw, flightLocation.pitch)
         this.createPath();
         this.t = 0;
-    }
-
-    getFirstDirectionVector() {
-        return this.getDirectionVector();
     }
 }
 

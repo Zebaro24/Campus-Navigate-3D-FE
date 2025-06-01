@@ -1,12 +1,15 @@
 import * as THREE from 'three';
-import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
+import {PointerLockControls} from 'three/examples/jsm/controls/PointerLockControls.js';
 
 class FreeFlyControls {
+    normalSpeed = 10; // Стандартна швидкість руху
+    boostSpeed = 25; // Пришвидшена швидкість руху
+
     constructor(camera, domElement) {
         this.camera = camera;
         this.controls = new PointerLockControls(camera, domElement);
 
-        // Состояния перемещения
+        // Стани переміщення
         this.movementState = {
             forward: false,
             backward: false,
@@ -14,20 +17,25 @@ class FreeFlyControls {
             right: false,
             up: false,
             down: false,
-            boost: false  // Состояние ускорения
+            boost: false,
         };
 
-        // Параметры управления
+        // Параметри керування
         this.velocity = new THREE.Vector3();
-        this.normalSpeed = 10;
-        this.boostSpeed = 25; // Ускорение при нажатии Shift
         this.clock = new THREE.Clock();
 
         this.initEventListeners();
     }
 
-    getObject() {
-        return this.controls.object
+    initEventListeners() {
+        // Блокування при натисканні
+        setTimeout(() => {
+            document.getElementById('main-scene').addEventListener('click', this.lock.bind(this));
+        }, 0)
+
+        // Клавіатурні процесори
+        document.addEventListener('keydown', this.handleKeyDown.bind(this));
+        document.addEventListener('keyup', this.handleKeyUp.bind(this));
     }
 
     lock() {
@@ -38,26 +46,25 @@ class FreeFlyControls {
         return this.controls.isLocked;
     }
 
-    initEventListeners() {
-        // Блокировка при клике
-        setTimeout(() => {
-            document.getElementById('main-scene').addEventListener('click', this.lock.bind(this));
-        }, 0)
-
-        // Обработчики клавиш
-        document.addEventListener('keydown', this.handleKeyDown.bind(this));
-        document.addEventListener('keyup', this.handleKeyUp.bind(this));
-    }
-
     handleKeyDown(event) {
         if (event.altKey) event.preventDefault();
 
         switch (event.code) {
-            case 'KeyW': this.movementState.forward = true; break;
-            case 'KeyS': this.movementState.backward = true; break;
-            case 'KeyA': this.movementState.left = true; break;
-            case 'KeyD': this.movementState.right = true; break;
-            case 'Space': this.movementState.up = true; break;
+            case 'KeyW':
+                this.movementState.forward = true;
+                break;
+            case 'KeyS':
+                this.movementState.backward = true;
+                break;
+            case 'KeyA':
+                this.movementState.left = true;
+                break;
+            case 'KeyD':
+                this.movementState.right = true;
+                break;
+            case 'Space':
+                this.movementState.up = true;
+                break;
             case 'AltLeft':
             case 'AltRight':
                 this.movementState.down = true;
@@ -71,11 +78,21 @@ class FreeFlyControls {
 
     handleKeyUp(event) {
         switch (event.code) {
-            case 'KeyW': this.movementState.forward = false; break;
-            case 'KeyS': this.movementState.backward = false; break;
-            case 'KeyA': this.movementState.left = false; break;
-            case 'KeyD': this.movementState.right = false; break;
-            case 'Space': this.movementState.up = false; break;
+            case 'KeyW':
+                this.movementState.forward = false;
+                break;
+            case 'KeyS':
+                this.movementState.backward = false;
+                break;
+            case 'KeyA':
+                this.movementState.left = false;
+                break;
+            case 'KeyD':
+                this.movementState.right = false;
+                break;
+            case 'Space':
+                this.movementState.up = false;
+                break;
             case 'AltLeft':
             case 'AltRight':
                 this.movementState.down = false;
@@ -90,26 +107,26 @@ class FreeFlyControls {
     updateMovementVector() {
         this.velocity.set(0, 0, 0);
 
-        // Горизонтальное движение
+        // Горизонтальний рух
         if (this.movementState.forward) this.velocity.z += 1;
         if (this.movementState.backward) this.velocity.z -= 1;
         if (this.movementState.left) this.velocity.x -= 1;
         if (this.movementState.right) this.velocity.x += 1;
 
-        // Вертикальное движение
+        // Вертикальний рух
         this.velocity.y = Number(this.movementState.up) - Number(this.movementState.down);
     }
 
     applyMovement(delta) {
-        // Определяем текущую скорость (обычная или ускоренная)
+        // Визначаємо поточну швидкість (звичайна або прискорена)
         const currentSpeed = this.movementState.boost ? this.boostSpeed : this.normalSpeed;
 
-        // Нормализация и масштабирование скорости
+        // Нормалізація та масштабування швидкості
         if (this.velocity.lengthSq() > 0) {
             this.velocity.normalize().multiplyScalar(currentSpeed * delta);
         }
 
-        // Применение перемещения
+        // Застосування переміщення
         this.controls.moveRight(this.velocity.x);
         this.controls.moveForward(this.velocity.z);
         this.camera.position.y += this.velocity.y;
@@ -120,11 +137,15 @@ class FreeFlyControls {
 
         const delta = this.clock.getDelta();
 
-        // Обновление вектора движения
+        // Оновлення вектора руху
         this.updateMovementVector();
 
-        // Применение перемещения
+        // Застосування переміщення
         this.applyMovement(delta);
+    }
+
+    getObject() {
+        return this.controls.object
     }
 }
 

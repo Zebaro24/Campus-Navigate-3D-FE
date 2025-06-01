@@ -1,13 +1,15 @@
-import AnimationBase from "./AnimationBase.js";
 import {Vector3} from "three";
 
-class Panorama extends AnimationBase{
+import AnimationBase from "./AnimationBase.js";
+
+class Panorama extends AnimationBase {
     constructor(scene, camera) {
         super(scene, camera);
 
         this.coords = null
         this.pitch = null
         this.speed = null
+
         this.t = 0;
     }
 
@@ -42,10 +44,6 @@ class Panorama extends AnimationBase{
         this.pitch = flightLocation['camera_pitch']
         this.speed = flightLocation.speed * 0.001;
         this.t = 0;
-    }
-
-    getFirstDirectionVector() {
-        return this.getDirectionVector();
     }
 }
 

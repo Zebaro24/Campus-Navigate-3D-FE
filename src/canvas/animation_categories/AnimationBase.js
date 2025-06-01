@@ -8,6 +8,9 @@ class AnimationBase {
         }
     }
 
+    getDirectionVector() {
+    }
+
     animate() {
     }
 
@@ -21,7 +24,7 @@ class AnimationBase {
     }
 
     getFirstDirectionVector() {
-        throw new Error("Вызван не переопределенный метод 'getFirstDirectionVector'");
+        return this.getDirectionVector();
     }
 
     getAnimationFunc() {
