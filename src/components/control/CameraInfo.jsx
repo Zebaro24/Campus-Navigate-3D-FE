@@ -111,11 +111,11 @@ function CameraInfo({mainScene}) {
             <div className={styles.infoSection}>
                 <h4 className={styles.sectionTitle}>Орієнтація</h4>
                 <div className={styles.infoGrid}>
-                    <span className={styles.label}>Нахил:</span>
-                    <span className={styles.value}>{cameraData.pitch}°</span>
-
                     <span className={styles.label}>Поворот:</span>
                     <span className={styles.value}>{cameraData.yaw}°</span>
+
+                    <span className={styles.label}>Нахил:</span>
+                    <span className={styles.value}>{cameraData.pitch}°</span>
                 </div>
             </div>
 
