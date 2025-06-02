@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 import {DRACOLoader} from 'three/examples/jsm/loaders/DRACOLoader.js';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
+import {Sky} from 'three/examples/jsm/objects/Sky.js';
 
 import AnimationHandler from "./AnimationHandler.js";
 import FreeFlyControls from './FreeFlyControls.js';
@@ -23,7 +24,7 @@ class MainScene {
         this.createRender();
         this.createCamera();
         this.createAnimation();
-        this.createGround(this.groundSize, this.numRepeats);
+        this.createEnvironment(this.groundSize, this.numRepeats);
         this.createLight();
         this.loadModel(this.pathModel);
     }
@@ -31,6 +32,9 @@ class MainScene {
     createRender() {
         this.renderer = new THREE.WebGLRenderer({antialias: true});
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Налаштування renderer для неба
+        this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     }
 
     createCamera() {
@@ -53,8 +57,29 @@ class MainScene {
         this.animationFunc = this.animationHandler.getAnimationFunc();
     }
 
-    createGround(groundSize, numRepeats) {
-        this.scene.background = new THREE.Color(0x87CEEB);
+    createEnvironment(groundSize, numRepeats) {
+        // Створення та налаштування неба
+        const sky = new Sky();
+        sky.scale.setScalar(450000);
+        this.scene.add(sky);
+
+        // noinspection JSUnresolvedVariable
+        const skyUniforms = sky.material.uniforms;
+        skyUniforms['turbidity'].value = 1;
+        skyUniforms['rayleigh'].value = 0.08;
+        skyUniforms['mieCoefficient'].value = 0.001;
+        skyUniforms['mieDirectionalG'].value = 0.95;
+
+        // Расчет положения солнца
+        const elevation = 70;
+        const azimuth = 180;
+        const phi = THREE.MathUtils.degToRad(90 - elevation);
+        const theta = THREE.MathUtils.degToRad(azimuth);
+
+        const sun = new THREE.Vector3();
+        sun.setFromSphericalCoords(1, phi, theta);
+        skyUniforms['sunPosition'].value.copy(sun);
+
         // Створення землі
         const geometry = new THREE.PlaneGeometry(groundSize, groundSize);
         const material = new THREE.MeshBasicMaterial({color: 0x333333, side: THREE.DoubleSide});
