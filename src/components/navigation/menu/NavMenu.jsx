@@ -6,7 +6,7 @@ import NavItem from './NavItem';
 
 import styles from './NavMenu.module.css';
 
-function NavMenu({mainScene, setOverlayInformation}) {
+function NavMenu({mainScene, setOverlayInformation, isOnTeamInfo, setIsOnTeamInfo}) {
     const [activeMenu, setActiveMenu] = useState('Головна');
 
     const itemsFunc = {activeMenu, onSelect:setActiveMenu};
@@ -36,6 +36,15 @@ function NavMenu({mainScene, setOverlayInformation}) {
             currentHandlerLockRef.current = newHandler;
         });
     }, [mainScene, setOverlayInformation]);
+
+    const clickTeamInfo = () => {
+        setOverlayInformation(null)
+        setIsOnTeamInfo(true)
+    }
+
+    if (isOnTeamInfo && activeMenu !== "Про нас"){
+        setIsOnTeamInfo(false)
+    }
 
     useEffect(() => {
         axios.get('/api/locations/category/main/').then((res => {
@@ -67,7 +76,7 @@ function NavMenu({mainScene, setOverlayInformation}) {
                     <NavItem itemsFunc={itemsFunc} clickFunc={mainLocationFunc}>Головна</NavItem>
                     <DropdownNavItem items={importantLocationItems} itemsFunc={itemsFunc}>Важливі місця</DropdownNavItem>
                     <DropdownNavItem items={cabinetLocationItems} itemsFunc={itemsFunc}>Кабінети</DropdownNavItem>
-                    <NavItem itemsFunc={itemsFunc}  clickFunc={() => {}}>Про нас</NavItem>
+                    <NavItem itemsFunc={itemsFunc}  clickFunc={clickTeamInfo}>Про нас</NavItem>
                 </nav>
             </div>
         </div>
