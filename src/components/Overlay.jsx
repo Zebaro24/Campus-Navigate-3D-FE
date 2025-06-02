@@ -1,12 +1,12 @@
 import {useEffect} from "react";
 
-import styles from "./Overley.module.css"
+import styles from "./Overley.module.css";
 
 function Overlay({information, setInformation}) {
     useEffect(() => {
         const closeOverlay = () => {
-            setInformation(() => null)
-        }
+            setInformation(() => null);
+        };
 
         document.addEventListener('pointerlockchange', closeOverlay);
         return () => {
@@ -16,7 +16,7 @@ function Overlay({information, setInformation}) {
 
     if (!information) return null;
 
-    const toggleBtn = () => setInformation(() => null)
+    const toggleBtn = () => setInformation(() => null);
 
     return (
         <div className={styles.overlay}>
@@ -25,7 +25,7 @@ function Overlay({information, setInformation}) {
             {information.image && <img src={information.image} alt={information.title}/>}
             <p>{information.description}</p>
         </div>
-    )
+    );
 }
 
-export default Overlay
+export default Overlay;

@@ -6,7 +6,7 @@ import StaticFrame from "./animation_categories/StaticFrame.js";
 import Panorama from "./animation_categories/Panorama.js";
 
 class AnimationHandler {
-    duration_load = 2000 // Час анімації підльоту до позиції
+    duration_load = 2000; // Час анімації підльоту до позиції
 
     constructor(scene, camera) {
 
@@ -24,7 +24,7 @@ class AnimationHandler {
     }
 
     animationFunc() {
-        this.activeAnimation()
+        this.activeAnimation();
     }
 
     getAnimationFunc() {
@@ -32,7 +32,7 @@ class AnimationHandler {
     }
 
     setAnimation(flightLocation) {
-        console.log(flightLocation)
+        console.log(flightLocation);
 
         const animationsMap = {
             static_frame: this.staticFrame,
@@ -40,13 +40,13 @@ class AnimationHandler {
             panorama: this.panorama,
         };
 
-        const animationCategory = animationsMap[flightLocation['flight_type']]
+        const animationCategory = animationsMap[flightLocation['flight_type']];
         if (!animationCategory) {
             this.activeAnimation = this.noop;
             return;
         }
 
-        animationCategory.setFlightLocation(flightLocation)
+        animationCategory.setFlightLocation(flightLocation);
 
         const pos = this.camera.position.clone();
         const dir = pos.clone().add(this.camera.getWorldDirection(new Vector3()));
@@ -55,7 +55,7 @@ class AnimationHandler {
         const target = {
             pos: animationCategory.getFirstPoint(),
             dir: animationCategory.getFirstDirectionVector(),
-        }
+        };
 
         const group = new Group();
         const tween = new Tween(current)
@@ -66,12 +66,12 @@ class AnimationHandler {
                 this.camera.lookAt(current.dir);
             })
             .onComplete(() => {
-                this.activeAnimation = animationCategory.getAnimationFunc()
-            })
+                this.activeAnimation = animationCategory.getAnimationFunc();
+            });
 
         group.add(tween);
         tween.start();
-        this.activeAnimation = () => group.update()
+        this.activeAnimation = () => group.update();
     }
 }
 

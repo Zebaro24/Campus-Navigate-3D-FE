@@ -6,9 +6,9 @@ class Panorama extends AnimationBase {
     constructor(scene, camera) {
         super(scene, camera);
 
-        this.coords = null
-        this.pitch = null
-        this.speed = null
+        this.coords = null;
+        this.pitch = null;
+        this.speed = null;
 
         this.t = 0;
     }
@@ -31,7 +31,7 @@ class Panorama extends AnimationBase {
     }
 
     getFirstPoint() {
-        return new Vector3(this.coords.x, this.coords.y, this.coords.z)
+        return new Vector3(this.coords.x, this.coords.y, this.coords.z);
     }
 
     setFlightLocation(flightLocation) {
@@ -39,9 +39,9 @@ class Panorama extends AnimationBase {
             x: flightLocation.x,
             y: flightLocation.y,
             z: flightLocation.z
-        }
+        };
 
-        this.pitch = flightLocation['camera_pitch']
+        this.pitch = flightLocation['camera_pitch'];
         this.speed = flightLocation.speed * 0.001;
         this.t = 0;
     }

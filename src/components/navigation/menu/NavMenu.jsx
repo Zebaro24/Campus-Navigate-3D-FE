@@ -9,13 +9,17 @@ import styles from './NavMenu.module.css';
 function NavMenu({mainScene, setOverlayInformation, isOnTeamInfo, setIsOnTeamInfo}) {
     const [activeMenu, setActiveMenu] = useState('Головна');
 
-    const itemsFunc = {activeMenu, onSelect:setActiveMenu};
+    const itemsFunc = {activeMenu, onSelect: setActiveMenu};
 
-    const [mainLocationFunc, setMainLocationFunc] = useState(() => {})
-    const [importantLocationItems, setImportantLocationItems] = useState(() => {})
-    const [cabinetLocationItems, setCabinetLocationItems] = useState(() => {})
+    const [mainLocationFunc, setMainLocationFunc] = useState(() => {
+    });
+    const [importantLocationItems, setImportantLocationItems] = useState(() => {
+    });
+    const [cabinetLocationItems, setCabinetLocationItems] = useState(() => {
+    });
 
-    const currentHandlerLockRef = useRef(() => {});
+    const currentHandlerLockRef = useRef(() => {
+    });
 
     const startAnimationLocation = useCallback((id) => {
         document.removeEventListener('pointerlockchange', currentHandlerLockRef.current);
@@ -38,33 +42,33 @@ function NavMenu({mainScene, setOverlayInformation, isOnTeamInfo, setIsOnTeamInf
     }, [mainScene, setOverlayInformation]);
 
     const clickTeamInfo = () => {
-        setOverlayInformation(null)
-        setIsOnTeamInfo(true)
-    }
+        setOverlayInformation(null);
+        setIsOnTeamInfo(true);
+    };
 
-    if (isOnTeamInfo && activeMenu !== "Про нас"){
-        setIsOnTeamInfo(false)
+    if (isOnTeamInfo && activeMenu !== "Про нас") {
+        setIsOnTeamInfo(false);
     }
 
     useEffect(() => {
         axios.get('/api/locations/category/main/').then((res => {
-            setMainLocationFunc(() => () => startAnimationLocation(res.data[0].id))
-            startAnimationLocation(res.data[0].id)
-        }))
+            setMainLocationFunc(() => () => startAnimationLocation(res.data[0].id));
+            startAnimationLocation(res.data[0].id);
+        }));
 
         axios.get('/api/locations/category/important/').then((res => {
             res.data.forEach(item => {
-                item.clickFunc = () => startAnimationLocation(item.id)
-            })
-            setImportantLocationItems(() => res.data)
-        }))
+                item.clickFunc = () => startAnimationLocation(item.id);
+            });
+            setImportantLocationItems(() => res.data);
+        }));
 
         axios.get('/api/locations/category/cabinet/').then((res => {
             res.data.forEach(item => {
-                item.clickFunc = () => startAnimationLocation(item.id)
-            })
-            setCabinetLocationItems(() => res.data)
-        }))
+                item.clickFunc = () => startAnimationLocation(item.id);
+            });
+            setCabinetLocationItems(() => res.data);
+        }));
     }, [setMainLocationFunc, setImportantLocationItems, setCabinetLocationItems, startAnimationLocation]);
 
 
@@ -74,9 +78,10 @@ function NavMenu({mainScene, setOverlayInformation, isOnTeamInfo, setIsOnTeamInf
             <div className={styles.boxMenu}>
                 <nav className={styles.menu}>
                     <NavItem itemsFunc={itemsFunc} clickFunc={mainLocationFunc}>Головна</NavItem>
-                    <DropdownNavItem items={importantLocationItems} itemsFunc={itemsFunc}>Важливі місця</DropdownNavItem>
+                    <DropdownNavItem items={importantLocationItems} itemsFunc={itemsFunc}>Важливі
+                        місця</DropdownNavItem>
                     <DropdownNavItem items={cabinetLocationItems} itemsFunc={itemsFunc}>Кабінети</DropdownNavItem>
-                    <NavItem itemsFunc={itemsFunc}  clickFunc={clickTeamInfo}>Про нас</NavItem>
+                    <NavItem itemsFunc={itemsFunc} clickFunc={clickTeamInfo}>Про нас</NavItem>
                 </nav>
             </div>
         </div>

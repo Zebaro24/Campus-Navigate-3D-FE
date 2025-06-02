@@ -15,7 +15,7 @@ class AnimationBase {
     }
 
     setFlightLocation(flightLocation) {
-        if (!flightLocation) console.log("Метод должен содержать 'flightLocation'")
+        if (!flightLocation) console.log("Метод должен содержать 'flightLocation'");
         throw new Error("Вызван не переопределенный метод 'setFlightLocation'");
     }
 

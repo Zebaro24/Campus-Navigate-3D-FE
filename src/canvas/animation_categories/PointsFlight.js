@@ -58,11 +58,11 @@ class PointsFlight extends AnimationBase {
     }
 
     setFlightLocation(flightLocation) {
-        const pathPoints = flightLocation['flight_points'].map(point => new Vector3(point.x, point.y, point.z))
+        const pathPoints = flightLocation['flight_points'].map(point => new Vector3(point.x, point.y, point.z));
 
         this.createPath(pathPoints);
-        this.lookDirection = flightLocation['camera_view_direction']
-        this.pitch = flightLocation['camera_pitch']
+        this.lookDirection = flightLocation['camera_view_direction'];
+        this.pitch = flightLocation['camera_pitch'];
         this.speed = flightLocation['speed'] * 0.0001;
         this.t = 0;
 

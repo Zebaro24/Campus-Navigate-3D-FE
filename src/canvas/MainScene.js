@@ -7,25 +7,25 @@ import AnimationHandler from "./AnimationHandler.js";
 import FreeFlyControls from './FreeFlyControls.js';
 
 class MainScene {
-    pathModel = import.meta.env.VITE_MODEL_URL
+    pathModel = import.meta.env.VITE_MODEL_URL;
     groundSize = 500;  // Розміри землі, які будуть повторюватися
     numRepeats = 5;  // Кількість повторень землі
 
     constructor() {
         this.scene = new THREE.Scene();
 
-        this.renderer = null
-        this.camera = null
-        this.animationHandler = null
-        this.animationFunc = null
-        this.componentLoadFunc = null
+        this.renderer = null;
+        this.camera = null;
+        this.animationHandler = null;
+        this.animationFunc = null;
+        this.componentLoadFunc = null;
 
-        this.createRender()
-        this.createCamera()
-        this.createAnimation()
-        this.createGround(this.groundSize, this.numRepeats)
-        this.createLight()
-        this.loadModel(this.pathModel)
+        this.createRender();
+        this.createCamera();
+        this.createAnimation();
+        this.createGround(this.groundSize, this.numRepeats);
+        this.createLight();
+        this.loadModel(this.pathModel);
     }
 
     createRender() {
@@ -49,8 +49,8 @@ class MainScene {
     }
 
     createAnimation() {
-        this.animationHandler = new AnimationHandler(this.scene, this.camera)
-        this.animationFunc = this.animationHandler.getAnimationFunc()
+        this.animationHandler = new AnimationHandler(this.scene, this.camera);
+        this.animationFunc = this.animationHandler.getAnimationFunc();
     }
 
     createGround(groundSize, numRepeats) {
@@ -119,12 +119,12 @@ class MainScene {
             const model = gltf.scene;
             model.position.set(0, 0, 0);
             this.scene.add(model);
-            this.animate()
-            this.componentLoadFunc && this.componentLoadFunc(101)
+            this.animate();
+            this.componentLoadFunc && this.componentLoadFunc(101);
         }, (xhr) => {
             const percent = Math.floor((xhr.loaded / xhr.total) * 100);
 
-            this.componentLoadFunc && this.componentLoadFunc(percent)
+            this.componentLoadFunc && this.componentLoadFunc(percent);
         }, (error) => {
             console.error('⛔ Помилка завантаження моделі:', error);
         });
@@ -139,7 +139,7 @@ class MainScene {
             }
 
             if (!this.freeFlyControls.isLocked() && this.animationFunc) {
-                this.animationFunc()
+                this.animationFunc();
             }
 
             this.renderer.render(this.scene, this.camera);
@@ -148,15 +148,15 @@ class MainScene {
     }
 
     setComponentLoadFunc(func) {
-        this.componentLoadFunc = func
+        this.componentLoadFunc = func;
     }
 
     setAnimation(flightLocation) {
-        this.animationHandler && this.animationHandler.setAnimation(flightLocation)
+        this.animationHandler && this.animationHandler.setAnimation(flightLocation);
     }
 
     getCanvas() {
-        return this.renderer.domElement
+        return this.renderer.domElement;
     }
 }
 

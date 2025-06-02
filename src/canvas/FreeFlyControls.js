@@ -31,7 +31,7 @@ class FreeFlyControls {
         // Блокування при натисканні
         setTimeout(() => {
             document.getElementById('main-scene').addEventListener('click', this.lock.bind(this));
-        }, 0)
+        }, 0);
 
         // Клавіатурні процесори
         document.addEventListener('keydown', this.handleKeyDown.bind(this));
@@ -145,7 +145,7 @@ class FreeFlyControls {
     }
 
     getObject() {
-        return this.controls.object
+        return this.controls.object;
     }
 }
 

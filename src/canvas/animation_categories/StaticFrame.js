@@ -11,7 +11,7 @@ class StaticFrame extends AnimationBase {
         this.point = null;
         this.curve = null;
 
-        this.t = 0
+        this.t = 0;
     }
 
     getLookDirectionVector(yaw, pitch) {
@@ -52,8 +52,8 @@ class StaticFrame extends AnimationBase {
     }
 
     setFlightLocation(flightLocation) {
-        this.point = new Vector3(flightLocation.x, flightLocation.y, flightLocation.z)
-        this.lookDirectionVector = this.getLookDirectionVector(flightLocation.yaw, flightLocation.pitch)
+        this.point = new Vector3(flightLocation.x, flightLocation.y, flightLocation.z);
+        this.lookDirectionVector = this.getLookDirectionVector(flightLocation.yaw, flightLocation.pitch);
         this.createPath();
         this.t = 0;
     }

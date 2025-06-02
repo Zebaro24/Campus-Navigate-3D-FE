@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import styles from './NavMenu.module.css';
 
 function DropdownNavItem({children, items, itemsFunc}) {
-    const {activeMenu, onSelect} = itemsFunc
+    const {activeMenu, onSelect} = itemsFunc;
     const [showDropdown, setShowDropdown] = useState(false);
     const isActive = activeMenu.startsWith(children);
 
@@ -29,8 +29,8 @@ function DropdownNavItem({children, items, itemsFunc}) {
                             key={item.id}
                             className={activeMenu === `${children}: ${item.title}` ? styles.activeItem : ''}
                             onClick={() => {
-                                handleSelect(item)
-                                item.clickFunc && item.clickFunc()
+                                handleSelect(item);
+                                item.clickFunc && item.clickFunc();
                             }}
                         >
                             {item.title}

@@ -10,7 +10,7 @@ import LoadingScreen from "./components/LoadingScreen.jsx";
 
 import MainScene from "./canvas/MainScene.js";
 
-import './App.css'
+import './App.css';
 import TeamInfo from "./components/TeamInfo.jsx";
 
 function App() {
@@ -19,9 +19,9 @@ function App() {
 
     const [isModelLoaded, setIsModelLoaded] = useState(false);
     const [overlayInformation, setOverlayInformation] = useState(null);
-    const [isOnTeamInfo, setIsOnTeamInfo] = useState(false)
+    const [isOnTeamInfo, setIsOnTeamInfo] = useState(false);
 
-    const novMenuAddFunc = {setOverlayInformation, isOnTeamInfo, setIsOnTeamInfo}
+    const novMenuAddFunc = {setOverlayInformation, isOnTeamInfo, setIsOnTeamInfo};
 
     useEffect(() => {
         containerRef.current.appendChild(mainScene.getCanvas());
@@ -41,12 +41,12 @@ function App() {
                     <Overlay information={overlayInformation} setInformation={setOverlayInformation}/>
                     <CameraInfo mainScene={mainScene}/>
                     <PointerLockHint/>
-                    { isOnTeamInfo && <TeamInfo/>}
+                    {isOnTeamInfo && <TeamInfo/>}
                 </>
             )}
             <div id="main-scene" ref={containerRef}/>
         </>
-    )
+    );
 }
 
-export default App
+export default App;

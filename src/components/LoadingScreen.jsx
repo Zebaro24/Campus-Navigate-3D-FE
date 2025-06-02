@@ -11,7 +11,7 @@ function LoadingScreen({setIsModelLoaded, mainScene}) {
     }, [mainScene]);
 
     useEffect(() => {
-        if (progress === 101) setTimeout(() => setIsModelLoaded(true), 400)
+        if (progress === 101) setTimeout(() => setIsModelLoaded(true), 400);
         if (!canvasRef.current) return;
 
         const canvas = canvasRef.current;

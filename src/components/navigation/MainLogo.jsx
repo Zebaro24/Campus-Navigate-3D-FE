@@ -8,7 +8,7 @@ function MainLogo() {
             </div>
             <div className={styles.gradientLeft}></div>
         </div>
-    )
+    );
 }
 
-export default MainLogo
+export default MainLogo;
