@@ -21,23 +21,25 @@ const infoProject = `Проект створює інтерактивну 3D-к�
 
 function TeamInfo() {
     return (
-        <div className={styles.teamInfo}>
-            <h1 className={styles.title}>Про нас</h1>
+        <div className={styles.notClickable}>
+            <div className={styles.teamInfo}>
+                <h1 className={styles.title}>Про нас</h1>
 
-            <div className={styles.members}>
-                {people.map((person, index) => (
-                    <div className={styles.memberCard} key={index}>
-                        <img src={person.image} alt={person.name} className={styles.memberImage}/>
-                        <h3 className={styles.memberName}>{person.name}</h3>
-                        <p className={styles.memberRole}>{person.role}</p>
-                        <p className={styles.memberDesc}>{person.description}</p>
-                    </div>
-                ))}
-            </div>
+                <div className={styles.members}>
+                    {people.map((person, index) => (
+                        <div className={styles.memberCard} key={index}>
+                            <img src={person.image} alt={person.name} className={styles.memberImage}/>
+                            <h3 className={styles.memberName}>{person.name}</h3>
+                            <p className={styles.memberRole}>{person.role}</p>
+                            <p className={styles.memberDesc}>{person.description}</p>
+                        </div>
+                    ))}
+                </div>
 
-            <div className={styles.projectInfo}>
-                <h2>Про проект</h2>
-                <p>{infoProject}</p>
+                <div className={styles.projectInfo}>
+                    <h2>Про проект</h2>
+                    <p>{infoProject}</p>
+                </div>
             </div>
         </div>
     );
