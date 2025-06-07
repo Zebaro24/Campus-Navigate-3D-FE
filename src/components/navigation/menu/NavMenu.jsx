@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import axios from "axios";
 
+import axios from "../../../utils/axiosInstance";
 import DropdownNavItem from './DropdownNavItem';
 import NavItem from './NavItem';
 
@@ -24,7 +24,7 @@ function NavMenu({mainScene, setOverlayInformation, isOnTeamInfo, setIsOnTeamInf
     const startAnimationLocation = useCallback((id) => {
         document.removeEventListener('pointerlockchange', currentHandlerLockRef.current);
 
-        axios.get(`/api/locations/${id}`).then(res => {
+        axios.get(`/locations/${id}`).then(res => {
             const newHandler = () => {
                 if (document.pointerLockElement !== null) return;
                 setOverlayInformation({
@@ -51,19 +51,19 @@ function NavMenu({mainScene, setOverlayInformation, isOnTeamInfo, setIsOnTeamInf
     }
 
     useEffect(() => {
-        axios.get('/api/locations/category/main/').then((res => {
+        axios.get('/locations/category/main/').then((res => {
             setMainLocationFunc(() => () => startAnimationLocation(res.data[0].id));
             startAnimationLocation(res.data[0].id);
         }));
 
-        axios.get('/api/locations/category/important/').then((res => {
+        axios.get('/locations/category/important/').then((res => {
             res.data.forEach(item => {
                 item.clickFunc = () => startAnimationLocation(item.id);
             });
             setImportantLocationItems(() => res.data);
         }));
 
-        axios.get('/api/locations/category/cabinet/').then((res => {
+        axios.get('/locations/category/cabinet/').then((res => {
             res.data.forEach(item => {
                 item.clickFunc = () => startAnimationLocation(item.id);
             });
