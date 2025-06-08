@@ -1,5 +1,6 @@
 .containerLogo {
     height: 140px;
+    max-height: 30%;
     position: absolute;
     display: flex;
 }
@@ -10,8 +11,7 @@
 }
 
 .boxLogo {
-    width: 220px;
-    padding: 20px;
+    padding: 8% 12%;
     display: flex;
     justify-content: center;
     background: rgba(20, 20, 20, 0.80);
@@ -20,4 +20,10 @@
 .gradientLeft {
     width: 50px;
     background: linear-gradient(to right, rgba(20, 20, 20, 0.80), rgba(0, 0, 0, 0));
+}
+
+@media (max-width: 768px) {
+    .containerLogo {
+        height: 13%;
+    }
 }
