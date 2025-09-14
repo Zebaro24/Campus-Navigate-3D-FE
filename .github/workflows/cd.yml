@@ -75,7 +75,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: |
             docker-compose.yml
-            nginx/**
+            nginx
           target: /srv/campus-navigate-3d/
 
       - name: Deploy containers via docker-compose
