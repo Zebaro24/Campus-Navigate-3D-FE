@@ -45,10 +45,9 @@ jobs:
       # Build and push Docker image
       - name: Build and push Docker image
         run: |
-          export VITE_API_BASE_URL=${{ vars.VITE_API_BASE_URL }}
-          export VITE_MODEL_URL=${{ vars.VITE_MODEL_URL }}
-          
           docker build -f Dockerfile \
+            --build-arg VITE_API_BASE_URL=${{ vars.VITE_API_BASE_URL }} \
+            --build-arg VITE_MODEL_URL=${{ vars.VITE_MODEL_URL }} \
             -t ghcr.io/$OWNER_NAME/$REPO_NAME:${VERSION} .
           docker push ghcr.io/$OWNER_NAME/$REPO_NAME:${VERSION}
 
