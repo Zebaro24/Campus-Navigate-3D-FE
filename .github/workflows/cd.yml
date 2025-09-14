@@ -45,6 +45,9 @@ jobs:
       # Build and push Docker image
       - name: Build and push Docker image
         run: |
+          export VITE_API_BASE_URL=${{ vars.VITE_API_BASE_URL }}
+          export VITE_MODEL_URL=${{ vars.VITE_MODEL_URL }}
+          
           docker build -f Dockerfile \
             -t ghcr.io/$OWNER_NAME/$REPO_NAME:${VERSION} .
           docker push ghcr.io/$OWNER_NAME/$REPO_NAME:${VERSION}
@@ -87,8 +90,6 @@ jobs:
             cd /srv/campus-navigate-3d
             docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
             
-            export VITE_API_BASE_URL=${{ vars.VITE_API_BASE_URL }}
-            export VITE_MODEL_URL=${{ vars.VITE_MODEL_URL }}
             export SERVER_PORT=${{ vars.SERVER_PORT }}
             
             docker compose -p campus-navigate-3d up -d --pull always
