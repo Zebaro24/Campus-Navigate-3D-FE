@@ -6,7 +6,7 @@ export default defineConfig({
     plugins: [react()],
     server: {
         host: true,
-        allowedHosts: ['university.zebaro.pp.ua'],
+        allowedHosts: ['campus.zebaro.dev'],
         proxy: {
             '/api': {
                 target: 'http://localhost:8000',
