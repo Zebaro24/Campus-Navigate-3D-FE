@@ -1,0 +1,22 @@
+services:
+  campus-navigate-3d-fe:
+    build:
+      context: .
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+        VITE_MODEL_URL: ${VITE_MODEL_URL}
+    image: ghcr.io/zebaro24/campus-navigate-3d-fe:latest
+    container_name: campus-navigate-3d-fe
+    expose:
+      - "80"
+    restart: unless-stopped
+  campus-navigate-3d-proxy:
+    image: nginx:1.27
+    container_name: campus-navigate-3d-proxy
+    volumes:
+      - ./proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "${SERVER_PORT}:80"
+    depends_on:
+      - campus-navigate-3d-fe
+    restart: unless-stopped
