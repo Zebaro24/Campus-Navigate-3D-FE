@@ -65,7 +65,7 @@ jobs:
         with:
           sparse-checkout: |
             docker-compose.yml
-            nginx/**
+            nginx
           fetch-depth: 1
       - name: Copy docker-compose
         uses: appleboy/scp-action@v0.1.3
