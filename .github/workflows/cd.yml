@@ -65,7 +65,7 @@ jobs:
         with:
           sparse-checkout: |
             docker-compose.yml
-            nginx/nginx.conf
+            proxy/nginx.conf
           fetch-depth: 1
       - name: Copy docker-compose and proxy config
         uses: appleboy/scp-action@v0.1.3
@@ -75,7 +75,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: |
             docker-compose.yml
-            nginx
+            proxy
           target: /srv/campus-navigate-3d/
 
       - name: Deploy containers via docker-compose
